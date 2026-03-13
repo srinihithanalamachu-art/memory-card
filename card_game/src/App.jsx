@@ -10,7 +10,7 @@ const cardValues=[
     "🍉",
      "🍑",
       "🍊",
-       "🍎",
+        "🍎",
   "🍌",
   "🍇",
   "🍓",
@@ -18,6 +18,7 @@ const cardValues=[
     "🍉",
      "🍑",
       "🍊",
+      
 
 ]
 function App() {
@@ -27,7 +28,7 @@ function App() {
     <div className="App">
     <GameHeader score={3} moves={10}/>
     </div>
-  )
+  );
 }
 
 export default App;
