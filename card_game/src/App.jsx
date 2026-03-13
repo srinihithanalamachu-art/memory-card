@@ -1,5 +1,5 @@
 import GameHeader from "./components/GameHeader";
-
+import Card from "./components/Card";
 
 const cardValues=[
   "🍎",
@@ -26,8 +26,12 @@ function App() {
 
   return (
     <div className="App">
-      <h1> hello </h1>
     <GameHeader score={3} moves={10}/>
+    <div className="cards-grid">
+       {cardValues.map((card)=>(
+        <Card card={card} />
+      ))}
+    </div>
     </div>
   );
 }
