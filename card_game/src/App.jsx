@@ -82,7 +82,9 @@ const[moves,setMoves]=useState(0);
 
   if(firstCard.value === secondCard.value)
   {  setTimeout(()=>
-  {
+  {   
+    setMatchedCards((prev)=> [...prev,firstCard.id,card.id]);
+    setScore((prev)=>prev+1);
      const newMatchedCards = newCards.map((c)=>{
       if(c.id === firstCard.id || c.id === secondCard.id)
       {
