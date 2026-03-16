@@ -28,7 +28,7 @@ function App() {
  const[matchedCards,setMatchedCards]=useState([]);
 const[score,setScore]=useState(0);
 const[moves,setMoves]=useState(0);
-
+const[isLocked,setIsLocked]=useState(false);
  const initializeGame=()=>
  {
   //SHUFFLE THE CARDS
@@ -43,6 +43,11 @@ const[moves,setMoves]=useState(0);
       }
     ));
     setCards(finalCards);
+    //reseting the values when we reset the game
+    setMoves(0);
+    setScore(0);
+    setFlippedCards([]);
+    setMatchedCards([]);
 
  };
  //when the component renders , the function need to be called
@@ -54,7 +59,7 @@ const[moves,setMoves]=useState(0);
   const handleCardClick=(card)=>
   {
     //don't allow clicking if card is already clicked
-    if(card.isFlipped || card.isMatched)
+    if(card.isFlipped || card.isMatched || isLocked || flippedCards.length===2)
     {
        return;
     } 
@@ -77,6 +82,7 @@ const[moves,setMoves]=useState(0);
 
      if(newFlippedCards.length === 2)
 {
+  setIsLocked(true);
   const firstCard = newCards[newFlippedCards[0]];
   const secondCard = newCards[newFlippedCards[1]];
 
@@ -95,6 +101,7 @@ const[moves,setMoves]=useState(0);
 
     setCards(newMatchedCards);
     setFlippedCards([]);
+    setIsLocked(false);
   },500);
    
   }
@@ -116,6 +123,7 @@ const[moves,setMoves]=useState(0);
         });
         setCards(flippedBackCard); 
       setFlippedCards([]);
+      setIsLocked(false);
     },1000);
       }
       setMoves((prev)=> prev+1);
@@ -124,7 +132,7 @@ const[moves,setMoves]=useState(0);
 
   return (
     <div className="App">
-    <GameHeader score={score} moves={moves}/>
+    <GameHeader score={score} moves={moves} onReset={initializeGame}/>
     <div className="cards-grid">
        {cards.map((card)=>(
         <Card key={card.id} card={card} onClick={handleCardClick} />
