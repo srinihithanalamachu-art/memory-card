@@ -53,8 +53,8 @@ function App() {
     //don't allow clicking if card is already clicked
     if(card.isFlipped || card.isMatched)
     {
-      return;
-    }
+       return;
+    } 
     //update card flipped state
     const newCards=cards.map((c)=>
     {
@@ -69,16 +69,28 @@ function App() {
     setCards(newCards);
      const newFlippedCards=[...flippedCards,card.id]
      setFlippedCards(newFlippedCards);
-
+  
      //check for match if cards are flipped
 
-     if(flippedCards.length===1)
-     {
-      const firstCard=cards[flippedCards[0]];
-      if(firstCard.value===card.value)
+     if(newFlippedCards.length === 2)
+{
+  const firstCard = newCards[newFlippedCards[0]];
+  const secondCard = newCards[newFlippedCards[1]];
+
+  if(firstCard.value === secondCard.value)
+  {
+    const newMatchedCards = newCards.map((c)=>{
+      if(c.id === firstCard.id || c.id === secondCard.id)
       {
-        alert("Match");
+        return {...c,isMatched:true};
       }
+      return c;
+    });
+
+    setCards(newMatchedCards);
+    setFlippedCards([]);
+  }
+
       else
       {
         // flip back card1 ,card2
@@ -106,7 +118,7 @@ function App() {
     <GameHeader score={3} moves={10}/>
     <div className="cards-grid">
        {cards.map((card)=>(
-        <Card card={card} onClick={handleCardClick} />
+        <Card key={card.id} card={card} onClick={handleCardClick} />
       ))}
     </div>
     </div>
